@@ -14,8 +14,35 @@ jobs:
           use-public-rspm: true
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          extra-packages: any::rcmdcheck
+          extra-packages: |
+            any::rcmdcheck
+            any::remotes
           needs: check
       - uses: r-lib/actions/check-r-package@v2
         with:
           args: 'c("--no-manual", "--as-cran")'
+      - name: Verify anonymous GitHub installation
+        if: github.event_name != 'pull_request'
+        shell: Rscript {0}
+        run: |
+          Sys.unsetenv(c("GITHUB_PAT", "GITHUB_TOKEN", "GH_TOKEN"))
+          isolated <- tempfile("BIO215-library-")
+          dir.create(isolated)
+          ref <- paste0("legacccy/BIO215@", Sys.getenv("GITHUB_SHA"))
+          remotes::install_github(ref, auth_token = NULL, lib = isolated,
+            dependencies = NA, upgrade = "never", force = TRUE,
+            build_vignettes = FALSE)
+          library(BIO215, lib.loc = isolated)
+          test <- read.csv("inst/extdata/test_features.csv", check.names = FALSE)
+          expected <- read.csv("inst/extdata/test_predictions.csv")
+          p <- predict_bio215(test, "probability")
+          classes <- ifelse(expected$predicted == "M", "Malignant", "Benign")
+          installed <- system.file("extdata", "model.rds", package = "BIO215", lib.loc = isolated)
+          stopifnot(length(p) == 115L,
+            max(abs(p - expected$probability_M)) < 1e-12,
+            identical(as.character(predict_bio215(test)), classes),
+            max(abs(explain_bio215(test)$probability_M - p)) < 1e-12,
+            identical(unname(tools::md5sum(installed)),
+              unname(tools::md5sum("inst/extdata/model.rds"))))
+          cat("PASS: anonymous GitHub installation; all 115 predictions and SHAP reconstructions match.\n")
+          print(sessionInfo())
