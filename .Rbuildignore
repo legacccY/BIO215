@@ -1,0 +1,6 @@
+^README\.Rmd$
+^README\.md$
+^LICENSE\.md$
+^\.github$
+^\.git$
+^\.gitignore$

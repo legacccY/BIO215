@@ -1,0 +1,9 @@
+Data: Wolberg, Mangasarian and Street. Wisconsin Diagnostic. DOI 10.24432/C5DW2B.
+Kaggle mirror: https://www.kaggle.com/datasets/uciml/breast-cancer-wisconsin-data
+Data license: CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/).
+Raw CSV SHA256: 1425d9affa78ba8e53afc81d0ef8a19069ee10c4b21fe89b3cf514071b12ee33.
+Code license: MIT; see LICENSE. Package and app use identical fitted model bytes.
+Selected ridge model: alpha=0, lambda=0.01, 30 predictors, train n=454, test n=115.
+Training-only repeated stratified five-fold CV; fixed class threshold 0.5.
+Original split seed 123; final refit seed 21500; no clinical validation.
+Test split already seen in feasibility work; internal audit only.

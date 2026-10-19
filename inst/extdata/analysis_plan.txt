@@ -1,0 +1,58 @@
+BIO215 model comparison plan — fixed before fitting, 2026-10-19 (Beijing)
+
+Data: Kaggle / UCI Wisconsin Diagnostic, 569 observations, 30 numeric predictors.
+Keep the existing seed-123 split: training 454 (285 B, 169 M), test 115 (72 B, 43 M).
+The test set was already examined during feasibility work. It is a fixed internal
+hold-out audit, not an untouched external validation cohort. Do not change it.
+
+On training observations only, create shared stratified five-fold partitions for
+three repeats with seeds 2151, 2152 and 2153. Each observation is validation once
+per repeat. Fit preprocessing using each fold's fitting observations only.
+Candidates: random forest (500 trees, mtry=5, all 30 features); random forest
+(500 trees, mtry=3, 10 mean features); ridge logistic regression (alpha=0,
+lambda=0.01,0.1,1, all 30 features); ridge logistic regression (lambda=0.1,
+10 mean features); radial SVM (cost=0.5,2,8; gamma=1/30, all 30 features).
+glmnet and SVM standardization is learned inside each training fold. No ID or
+diagnosis enters predictors. No additional feature selection uses test labels.
+The prespecified 30-versus-10 comparison tests feature reduction without using
+the complete dataset to rank features. Report unsuccessful reductions too.
+
+Select the candidate with highest mean validation AUROC across the 15 folds.
+Exact ties: fewer active features, then candidate order above. These CV scores
+are used for selection, not claimed to be an unbiased final performance estimate.
+Refit once on all 454 training observations using seed 21500. Audit the selected
+model once on the unchanged 115 test observations; do not change the winner,
+threshold, features, or hyperparameters in response. Threshold P(M)>=0.5.
+Retain historical feasibility outputs. Retain all fold assignments, predictions,
+configuration, metrics and timing. Report ROC/PR curves, accuracy, sensitivity,
+specificity, F1, AUROC, AUPRC, Brier score and calibration. Bootstrap the fixed
+test predictions for descriptive 95% uncertainty intervals, not external claims.
+
+Interpretation after selection: held-out permutation importance (AUROC decrease)
+and model-agnostic Monte Carlo SHAP for P(M), training-only background. SHAP
+is approximate, adjusted for local additivity, with fixed seed and at least 128
+simulations. Assess stability against an independent higher-simulation run on a
+small prespecified subset. Correlated nuclear size features limit attribution;
+SHAP is a model explanation, not causal evidence or clinical validation.
+
+Shiny and the BIO215 R package must use byte-identical model objects and shared
+prediction/validation source. Package default output must be predicted classes.
+Verify installation, R CMD check, examples, malformed inputs, reordered columns,
+and identity of all 115 package versus Shiny predictions. Retain test logs.
+Prepare GitHub-ready source and README.Rmd; public publication is a separate step.
+
+Design: original pink palette inspired by the breast cancer awareness ribbon;
+no charity logo or affiliation. Use dark text and buttons; verify text contrast,
+keyboard navigation, narrow screens and every existing prediction/data workflow.
+
+Sources: https://breastcancernow.org/get-involved/breast-cancer-awareness-month
+https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html
+https://glmnet.stanford.edu/articles/glmnet.html
+https://bgreenwell.github.io/fastshap/reference/explain.html
+https://doi.org/10.24432/C5DW2B
+
+Implementation note after selecting the ridge model: also provide exact linear
+interventional SHAP on log-odds for immediate Shiny/package explanations. This
+does not replace the planned probability-scale Monte Carlo SHAP audit. Formula
+and assumptions follow https://shap.readthedocs.io/en/latest/generated/shap.LinearExplainer.html .
+fastshap current CRAN installation was unavailable; use CRAN archive version 0.1.1.

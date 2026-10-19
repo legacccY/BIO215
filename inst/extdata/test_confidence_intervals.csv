@@ -1,0 +1,8 @@
+"metric","lower","upper","method"
+"accuracy",0.952383273655686,0.998463351094119,"Wilson binomial"
+"sensitivity",0.917990196774209,1,"Wilson binomial"
+"specificity",0.925433978525238,0.997544048117094,"Wilson binomial"
+"F1",0.966292134831461,1,"Stratified bootstrap"
+"AUROC",0.998062015503876,1,"Stratified bootstrap"
+"AUPRC",0.996898713776792,1,"Stratified bootstrap"
+"Brier",0.00608653442217922,0.0209146685919171,"Stratified bootstrap"

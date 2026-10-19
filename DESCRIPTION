@@ -1,0 +1,20 @@
+Package: BIO215
+Type: Package
+Title: Reproducible Breast Tumor Classification for BIO215
+Version: 0.1.0
+Authors@R: person("Jia", "Yu", email = "legacccy1@gmail.com", role = c("aut", "cre"))
+Description: Applies the fixed trained Wisconsin Diagnostic classification model
+    used by the BIO215 Shiny application. Validates tabular measurements, returns
+    predicted classes or malignant probabilities, and provides exact interventional
+    feature contributions on the log-odds scale for the selected ridge model.
+    Includes example observations, model provenance and internal evaluation results.
+    Intended for reproducible education, not clinical diagnosis.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Depends: R (>= 4.1.0)
+Imports: stats, utils, glmnet, randomForest, e1071
+Suggests: testthat (>= 3.0.0), knitr
+Config/testthat/edition: 3
+URL: https://github.com/legacccy/BIO215,
+    https://legacccy.shinyapps.io/bio215-wisconsin-feasibility/
+BugReports: https://github.com/legacccy/BIO215/issues

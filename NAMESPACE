@@ -1,0 +1,6 @@
+export(predict_bio215)
+export(example_bio215)
+export(explain_bio215)
+import(glmnet)
+import(randomForest)
+import(e1071)

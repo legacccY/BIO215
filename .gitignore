@@ -1,0 +1,10 @@
+.Rhistory
+.RData
+.Ruserdata
+.Renviron
+.Rproj.user/
+*.Rcheck/
+*.tar.gz
+rsconnect/
+*_token*
+*_secret*

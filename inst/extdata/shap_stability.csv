@@ -1,0 +1,2 @@
+"n","nsim_first","nsim_second","mean_absolute_difference","max_absolute_difference","rank_correlation"
+10,128,512,0.00347106553799133,0.0251762658359912,0.988876529477197
