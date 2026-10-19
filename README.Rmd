@@ -39,6 +39,7 @@ completed run for the tested R versions and platform results.
 ## Predict classes
 
 ```{r example}
+library(BIO215)
 x <- example_bio215()
 dim(x)
 predict_bio215(x)

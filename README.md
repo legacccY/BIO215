@@ -39,6 +39,7 @@ completed run for the tested R versions and platform results.
 
 
 ```r
+library(BIO215)
 x <- example_bio215()
 dim(x)
 #> [1]  3 30

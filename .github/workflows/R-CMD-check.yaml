@@ -25,7 +25,9 @@ jobs:
         if: github.event_name != 'pull_request'
         shell: Rscript {0}
         run: |
-          Sys.unsetenv(c("GITHUB_PAT", "GITHUB_TOKEN", "GH_TOKEN"))
+          # Disable remotes' bundled CI credential when testing anonymous access.
+          Sys.unsetenv(c("GITHUB_PAT", "GITHUB_TOKEN", "GH_TOKEN", "CI"))
+          stopifnot(is.null(remotes:::github_pat()))
           isolated <- tempfile("BIO215-library-")
           dir.create(isolated)
           ref <- paste0("legacccy/BIO215@", Sys.getenv("GITHUB_SHA"))
