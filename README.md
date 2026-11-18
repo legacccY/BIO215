@@ -1,7 +1,6 @@
----
-title: "BIO215: Breast tumor classification"
-output: github_document
----
+
+# BIO215: Breast tumor classification
+
 
 
 

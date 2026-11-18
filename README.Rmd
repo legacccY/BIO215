@@ -3,6 +3,9 @@ title: "BIO215: Breast tumor classification"
 output: github_document
 ---
 
+# BIO215: Breast tumor classification
+
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 library(BIO215)
